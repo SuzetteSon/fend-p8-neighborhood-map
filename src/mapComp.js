@@ -12,6 +12,7 @@ class MapComp extends Component {
 	render() {
 		return (
 			<div className='google-map'>
+		{/*any components to appear on the map, to be wrapped in GoogleMapReact */}
 				<GoogleMapReact
 				bootstrapURLKeys={{key: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'}}
 					defaultCenter={this.props.center}
