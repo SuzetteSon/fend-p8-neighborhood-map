@@ -1,8 +1,17 @@
 import React, {Component} from 'react'
 
+
 class LocationPanel extends Component {
 
+
+
+	
+
 	render() {
+
+		
+		
+		
 		return(
 			<div>
 				<div className="search-locations">
@@ -10,7 +19,7 @@ class LocationPanel extends Component {
 			              <div className="search-locations-input-wrapper">
 			                <input 
 			                	type="text" 
-			                	placeholder="Search location"
+			                	placeholder="Search Coffee Shop"
 			                	/>
 			              </div>
 		            </div>  
@@ -20,7 +29,13 @@ class LocationPanel extends Component {
 
 		          	<div>
 		          		{/* ordered list to render locations in  */}
-				        <ol className='locations-grid'>
+				        <ol className='locations-list'>
+				        	{this.props.locations.map((l) => 
+
+				        		<li key={l.key} className='locations-list-item'>
+				        		{l.key}
+				        		</li>
+				        		)}
 
 				        </ol>
 		            </div>
