@@ -18,23 +18,31 @@ class MapComp extends Component {
 	render() {
 
 		
-		const Marker = ({ text }) => <div>{text}</div>;
+		const Marker = ({ text }) => <div className='marker'>{text}</div>;
 		//const SecondMarker = ({text}) =><div>{text}</div>;
 		const showLocations = this.props.locations;
-		console.log(showLocations);
+		
 
 		return (
 			<div className='google-map'>
+
 				
 		{/*any components to appear on the map, to be wrapped in GoogleMapReact */}
 				<GoogleMapReact
-				bootstrapURLKeys={{key: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'}}
+					bootstrapURLKeys={{key: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'}}
 					defaultCenter={this.props.center}
-					defaultZoom={this.props.zoom}>
+					defaultZoom={this.props.zoom}
+					
+					onChildMouseEnter={this.onChildMouseEnter}
+					onChildMouseLeave={this.onChildMouseLeave}
+
+					>
+
 					<NameComp
 						lat={59.329323}
 	            		lng={18.068581}
 	            		text={'Hello Stockholm'}
+
 	            		/>
 
 	            	{showLocations.map((l) => (
@@ -43,24 +51,22 @@ class MapComp extends Component {
 							lat={l.lat}
 		            		lng={l.lng}
 							text={l.key}
-								>{console.log(l.key)}
+							>
+							
+								<img
+									alt={'rocket'}
+									src={'http://www.kwikplum.co.za/images/bakkie.jpg'}/>
+							
+							
+							
+							
+								
+							
+							
 						</Marker>
 
 					
 				))}
-	            	
-					{/*<FirstMarker
-						key={'vetekatten'}
-						lat={59.33411}
-		            	lng={18.058331}
-						text={'vete-katten'}
-						>{console.log('FirstMarker')}
-					</FirstMarker>*/}
-
-
-	            	
-	            	
-
 				</GoogleMapReact>
 			</div>
 		)

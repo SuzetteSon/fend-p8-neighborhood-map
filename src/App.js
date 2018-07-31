@@ -5,7 +5,7 @@ import LocationPanel from './locationPanel.js';
 //import MapMarker from './mapMarker.js';
 
 const locations = [
-  { key: 'vete-katten', lat: 59.33411, lng: 18.058331 },
+  { key: 'vete-katten', lat: 59.33411, lng: 18.058331, imgFile: 'rocket.png'  },
   { key: 'sovel', lat: 59.304716, lng:18.12365 },
   { key: 'johan&nystrom', lat: 59.335335, lng:18.071341 },
   { key: 'fikabaren', lat: 59.314437, lng: 18.079892 },
