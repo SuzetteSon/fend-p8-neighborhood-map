@@ -1,16 +1,8 @@
-import React, {Component} from 'react'
-
+import React, {Component} from 'react';
 
 class LocationPanel extends Component {
 
-
-
-	
-
 	render() {
-
-		
-		
 		
 		return(
 			<div>
@@ -34,9 +26,9 @@ class LocationPanel extends Component {
 
 				        		<li key={l.key} className='locations-list-item'>
 				        		{l.key}
-				        		</li>
-				        		)}
+				        		</li>,
 
+				        		)}
 				        </ol>
 		            </div>
 		        </div>
@@ -46,4 +38,4 @@ class LocationPanel extends Component {
 		
 }
 
-export default LocationPanel
+export default LocationPanel;

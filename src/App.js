@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import MapComp from './mapComp.js'
-import LocationPanel from './locationPanel.js'
+import MapComp from './mapComp.js';
+import LocationPanel from './locationPanel.js';
+//import MapMarker from './mapMarker.js';
 
 const locations = [
   { key: 'vete-katten', lat: 59.33411, lng: 18.058331 },
   { key: 'sovel', lat: 59.304716, lng:18.12365 },
-  { key: 'johan&nyström', lat: 59.335335, lng:18.071341 },
+  { key: 'johan&nystrom', lat: 59.335335, lng:18.071341 },
   { key: 'fikabaren', lat: 59.314437, lng: 18.079892 },
   { key: 'its pleat', lat: 59.333076, lng: 18.062543}
 ]
@@ -26,7 +27,9 @@ class App extends Component {
             </h2>
           </div>
       <MapComp
+      locations={locations}
       />
+
       <LocationPanel
       locations={locations}
       />
