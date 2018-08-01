@@ -26,7 +26,7 @@ class LocationPanel extends Component {
 
 
 		return(
-			<div>
+			<div className='locations-panel'>
 				<div className="search-locations">
 			        <div className="search-locations-bar">
 			              <div className="search-locations-input-wrapper">

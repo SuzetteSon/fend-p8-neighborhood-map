@@ -40,9 +40,7 @@ div {
 
 /* search bar */
 
-.search-locations {
-  width: 50%;
-}
+
 
 .search-locations-bar {
   
@@ -71,6 +69,10 @@ div {
 }
 
 /* locations grid */
+
+.locations-panel {
+  width: 50%;
+}
 
 .locations-list {
   width: 100%;
