@@ -1,6 +1,9 @@
 body {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+div {
+  position: relative;
+}
 
 .App {
   text-align: center;
@@ -32,12 +35,17 @@ body {
   height: 100vh;
   width: 50%;
   float: right;
+  position: relative;
 }
 
 /* search bar */
 
-.search-locations-bar {
+.search-locations {
   width: 50%;
+}
+
+.search-locations-bar {
+  
   top: 0;
   left: 0;
   z-index: 5;
@@ -45,8 +53,9 @@ body {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
 }
 .search-locations-input-wrapper {
-  flex: 1;
+  
   background: #e9e;
+  
 }
 .search-locations-bar input {
   width: 100%;
@@ -57,7 +66,8 @@ body {
 }
 
 .search-locations-results {
-  padding: 80px 10px 20px;
+  padding: 80px 0px 20px;
+  width: 50%;
 }
 
 /* locations grid */
@@ -96,6 +106,7 @@ body {
   border: 1px solid rgba(72, 181, 233, 0.6);
   border-radius: 2px 2px 10px 10px;
 }
+
 
 
 

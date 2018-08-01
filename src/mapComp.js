@@ -47,7 +47,7 @@ class MapComp extends Component {
 		const style = {
 			height: '100vh',
   			width: '50%',
-  			float: 'right',
+  			cssFloat: 'right',
   			position: 'relative'
 		};
 
