@@ -1,75 +1,91 @@
 import React, {Component} from 'react';
-import GoogleMapReact from 'google-map-react';
-import PropTypes from 'prop-types';
-
-const NameComp = ({text}) => <div>{text}</div>;
+import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 
 
 class MapComp extends Component {
-	static defaultProps = {
-		center: { lat: 59.329323, lng: 18.068581},
-		zoom: 13
-	};
 
-	static propTypes = {
-		locations: PropTypes.array.isRequired
-	};
+	state = {
+		showingInfoWindow: false,
+		activeMarker: {},
+		selectedPlace: {}
+		//click: false
+	}
+	
+
+	onMarkerClick = (props, marker, e) => {
+		this.setState({
+			selectedPlace: props,
+			activeMarker: marker,
+			showingInfoWindow: true
+		});
+
+	}
+
+	mapClicked = (props) => {
+		if (this.state.showingInfoWindow) {
+			this.setState({
+				showingInfoWindow: false,
+				activeMarker: null
+
+			})
+		}
+	}
+
+	onOpen =  (props) => {
+		if (this.state.onOpen) {
+			this.setState({
+				showingInfoWindow: true
+			})
+		}
+	}
 
 	render() {
 
+		//const showLocations = this.props.locations;
+		const pos = { lat: 59.329323, lng: 18.068581 }
 		
-		const Marker = ({ text }) => <div className='marker'>{text}</div>;
-		//const SecondMarker = ({text}) =><div>{text}</div>;
-		const showLocations = this.props.locations;
-		
+		const style = {
+			height: '100vh',
+  			width: '50%',
+  			float: 'right',
+  			position: 'relative'
+		};
 
 		return (
-			<div className='google-map'>
+			<Map className='google-map'
 
-				
-		{/*any components to appear on the map, to be wrapped in GoogleMapReact */}
-				<GoogleMapReact
-					bootstrapURLKeys={{key: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'}}
-					defaultCenter={this.props.center}
-					defaultZoom={this.props.zoom}
-					
-					onChildMouseEnter={this.onChildMouseEnter}
-					onChildMouseLeave={this.onChildMouseLeave}
-
+					style={style}
+					google = {this.props.google}
+					onClick={this.mapClicked}
+					initialCenter={{ lat: 59.329323, lng: 18.068581 }}
+					zoom={14}
 					>
-
-					<NameComp
-						lat={59.329323}
-	            		lng={18.068581}
-	            		text={'Hello Stockholm'}
-
-	            		/>
-
-	            	{showLocations.map((l) => (
-						<Marker 
-							key={l.key}
-							lat={l.lat}
-		            		lng={l.lng}
-							text={l.key}
-							>
+	            		
+							<Marker 
+								//key={l.key}
+								position={pos}
+								onClick={this.onMarkerClick}
+								name={'Current'}
+								 />
 							
-								<img
-									alt={'rocket'}
-									src={'http://www.kwikplum.co.za/images/bakkie.jpg'}/>
-							
-							
-							
-							
+								<InfoWindow
+									//onOpenClick={this.onOpen}
+									//onCloseClick={this.closedWindow}
+									//className='info-window'
+									//position={l.position}
+									marker={this.state.activeMarker}
+									visible={this.state.showingInfoWindow}
+									>
+										<div>
+											<h3>{this.state.selectedPlace.name}</h3>
+											{console.log(this.state.selectedPlace.name)}
+										</div>
 								
-							
-							
-						</Marker>
-
-					
-				))}
-				</GoogleMapReact>
-			</div>
+								</InfoWindow>
+			</Map>
 		)
 	}
 }
-export default MapComp;
+export default GoogleApiWrapper({
+	apiKey: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'
+})(MapComp)
