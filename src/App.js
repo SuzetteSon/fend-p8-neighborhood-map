@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MapComp from './mapComp.js';
 import LocationPanel from './locationPanel.js';
-//import MapMarker from './mapMarker.js';
+import FourSquareAPI from './FourSquareAPI.js';
 
 const locations = [
   { key: 'vete-katten', position:  {lat: 59.33411, lng: 18.058331} },
@@ -13,6 +13,10 @@ const locations = [
 ]
 
 class App extends Component {
+
+  state = {
+    items: []
+  }
   
   render() {
     return (
@@ -26,13 +30,9 @@ class App extends Component {
               </span>
             </h2>
           </div>
-      <MapComp
-      locations={locations}
-      />
-
-      <LocationPanel
-      locations={locations}
-      />
+        <FourSquareAPI
+        items={this.state.items}
+        />
 
       </div>
     );
