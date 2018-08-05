@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MapComp from './mapComp.js'
+import LocationPanel from './locationPanel.js'
 
 
 
@@ -60,18 +61,20 @@ const foursquare = require ('react-foursquare') ({
 
 
 
-
 class App extends Component {
 
   constructor(props) {
     super(props);
-
       this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue = this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue.bind(this)
+      this.state={
+        data: ""
+      }
   }
+
 
   state = {
     foursquareData: [],
-    fikaSpots: []
+    fikaSpotsState: []
   }
   
 
@@ -79,7 +82,7 @@ class App extends Component {
     //loop through all locations from app.js and set the parameters to the ones needed 
     //for the foursquare api call. This is just a simple call, 
     //that send through the name and lat and long and gets all the matches.
-    this.state.fikaSpots = fikaSpots
+
     for (const l of fikaSpots) {
       const params = {}
       params['query'] = l.key
@@ -92,28 +95,6 @@ class App extends Component {
     }
   }
 
-
-  
-/*  componentDidMount() {
-
-    for (const l of fikaSpots) {
-      const params = {}
-      params['query'] = l.key
-      params['ll'] = l.ll
-
-
-      foursquare.venues.getVenues(params)
-      .then(response  => {
-        if(!response.ok) { throw response }
-          return response
-        }).then( (data) => {
-        this.setState({ foursquareData: data.response.venues });
-        })
-      .catch( err => {
-        console.log('iets');
-      })
-    }
-  }*/
 
   //functions
 
@@ -163,6 +144,10 @@ class App extends Component {
     this.setThisShowActiveDetailToTrue(id);
     this.setThisShowActiveMarkerToTrue(id);
     console.log('done', fikaSpots);
+    //this.forceUpdate()
+    this.setState({
+    fikaSpotsState:fikaSpots
+    })
   }
 
 
@@ -173,12 +158,14 @@ class App extends Component {
     //from foursquare
     
     for (const l of fikaSpots) {
-      for (const i of this.state.foursquareData) {
-        if (i.id === l.fsid) {
-              l.name = i.name
-              l.address = i.location.address
-              //console.log('match')
-            }
+      if(this.state.foursquareData){
+        for (const i of this.state.foursquareData) {
+          if (i.id === l.fsid) {
+                l.name = i.name
+                l.address = i.location.address
+                //console.log('match')
+              }
+        }
       }
     }
 
@@ -194,6 +181,12 @@ class App extends Component {
           fikaSpots={fikaSpots}
           // to export a function with a parameter
           toggleFunc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
+
+
+        />
+        <LocationPanel
+          fikaSpots={fikaSpots}
+          toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
 
         />
 

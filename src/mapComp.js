@@ -7,7 +7,9 @@ class MapComp extends Component {
 	//set prototypes to us from Map comp
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
-		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired
+		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
+		callback: PropTypes.func
+
 	}
 
 	//set new empty state for fikaSpots array
@@ -19,8 +21,10 @@ class MapComp extends Component {
 		this.props.toggleFunc(marker.name)
 		this.setState({
 			fikaSpotsState: this.props.fikaSpots
-		})		
+		})	
 	}
+
+
 
 
 	render() {
@@ -28,7 +32,8 @@ class MapComp extends Component {
 		
 		const style = {
 			height: '100vh',
-  			width: '100%'
+  			width: '50%',
+  			cssFloat: 'right'
 		};
 
 		//change the state from fikaSpots on App comp to fikaSpots on this comp
@@ -72,7 +77,8 @@ class MapComp extends Component {
 	                				
 				</Map>
 
-				</div>
+			</div>
+
 
 		)
 	}
@@ -80,3 +86,5 @@ class MapComp extends Component {
 export default GoogleApiWrapper({
 	apiKey: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'
 })(MapComp)
+
+
