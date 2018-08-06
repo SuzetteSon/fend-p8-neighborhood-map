@@ -4,7 +4,9 @@
 
 I was tasked to create  a single-page application using React featuring a map of my neighborhood (Stockholm). I added additional functionality to this application, including: map markers to identify my favourite 'fika' spots, a search function to easily discover these locations, and a list view to support simple browsing of all of my locations. I made use of the FourSquare API to provide additional information (the address) about each of these locations.
 
+## Prerequisite
 
+**npm** is a prerequisite for this application, download [here](https://www.npmjs.com/get-npm)
 
 
 ## Running the application
@@ -33,9 +35,6 @@ To be able to test the ServiceWorker:
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 
-## Deployment
-
-`npm run build` creates a `build` directory with a production build of your app. Set up your favorite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
 
 
 

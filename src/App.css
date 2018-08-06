@@ -185,7 +185,7 @@ footer {
 }
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 501px) {
 
   .search-locations {
     width: 100%;

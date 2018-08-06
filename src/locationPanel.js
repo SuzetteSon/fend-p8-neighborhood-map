@@ -52,10 +52,6 @@ class LocationPanel extends Component {
 				//call n funksie wat die groot funksie roep.
 				for (let loc of listLocations) { 
 					this.props.onSearchResultChangedFunc(listLocations, loc)
-					//ek dink probeer die search deel in a aparte component
-					//as jy daarna nogsteeds dieselfde error kry van not a function, 
-					//probeer miskien dit in the app.js direk doen?
-					//this.onLocationClick.bind(this, 1)
 					//console.log(this.state.fikaSpotsState)
 					console.log('daar')
 				}
@@ -119,7 +115,7 @@ class LocationPanel extends Component {
 					        			role={"link"} 
 					        			className='locations-list-item'
 					        			onClick={this.onLocationClick.bind(this, l.id)}
-					        			tabindex={0}
+					        			tabIndex={0}
 					        			>
 						        		{l.name}
 							        	

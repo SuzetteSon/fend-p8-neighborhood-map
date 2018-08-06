@@ -3,7 +3,9 @@ import './App.css';
 import MapComp from './mapComp.js'
 import LocationPanel from './locationPanel.js'
 
-
+function gm_authFailure(){
+  
+}
 
 const fikaSpots = [
   { id: 1,
@@ -74,8 +76,12 @@ class App extends Component {
 
   state = {
     foursquareData: [],
-    fikaSpotsState: []
+    fikaSpotsState: [],
+    apiError: false,
+    errorFetch: ''
   }
+
+
   
 
   componentDidMount(){
@@ -84,13 +90,31 @@ class App extends Component {
     //that send through the name and lat and long and gets all the matches.
 
     for (const l of fikaSpots) {
+
+
       const params = {}
       params['query'] = l.key
       params['ll'] = l.ll
 
       foursquare.venues.getVenues(params)
       .then(res=> {
-        this.setState({ foursquareData: res.response.venues })
+
+      if (!res.ok) {
+        this.setState({
+          apiError: true,
+          errorFetch: "Could not load location address"
+        });
+        throw res;
+      }
+    })
+      .then( data => {
+
+        this.setState({ foursquareData: data.response.venues })
+
+      })
+      .catch( err => {
+        throw err;
+        console.log('error caught')
       })
     }
   }
@@ -241,7 +265,9 @@ class App extends Component {
           onSearchResultChangedFunc={this.onSearchResultChanged}
 
         />
-
+        <div>
+          {this.state.apiError && <h1>{this.state.errorFetch}</h1>}
+        </div>
         <footer>
         Address information provided by FourSquare API
         </footer>

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { GoogleApiWrapper,  Map, Marker } from 'google-maps-react';
 import PropTypes from 'prop-types';
 
+
+
 class MapComp extends Component {
 
 	//set prototypes to us from Map comp
