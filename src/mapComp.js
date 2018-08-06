@@ -55,7 +55,7 @@ class MapComp extends Component {
 										position={l.position} 
 										onClick={this.onMarkerClick}
 										icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
-										role={"landmark"}
+										
 										> 
 
 									</Marker>
@@ -68,7 +68,7 @@ class MapComp extends Component {
 										position={l.position} 
 										onClick={this.onMarkerClick}
 										icon={'http://maps.google.com/mapfiles/ms/icons/red-dot.png'}
-										role={"landmark"}
+										
 										> 
 
 									</Marker>

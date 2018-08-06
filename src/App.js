@@ -4,7 +4,7 @@ import MapComp from './mapComp.js'
 import LocationPanel from './locationPanel.js'
 
 function gm_authFailure(){
-  
+  alert('Failed to load Google Maps, try refreshig the page')
 }
 
 const fikaSpots = [
@@ -16,7 +16,8 @@ const fikaSpots = [
     fsid: '4adcdaf2f964a520105c21e3',
     visible: true,
     showDetail: false,
-    showActiveMarker: false },
+    showActiveMarker: false,
+    descriptionFromFoursquare: '' },
   { id: 2,
     name: 'Sovel',
     position: {lat: 59.304716, lng:18.12365}, 
@@ -25,7 +26,8 @@ const fikaSpots = [
     fsid: '577cdc65498eb9a4c4440707',
     visible: true,
     showDetail: false,
-    showActiveMarker: false },
+    showActiveMarker: false,
+    descriptionFromFoursquare: '' },
   { id: 3,
     name: 'Johan&Nystrom', 
     position: {lat: 59.335335, lng:18.071341}, 
@@ -34,7 +36,8 @@ const fikaSpots = [
     fsid: '591305e60f013c580ca919b7',
     visible: true,
     showDetail: false,
-    showActiveMarker: false  },
+    showActiveMarker: false,
+    descriptionFromFoursquare: ''  },
   { id: 4,
     name: 'Fikabaren',
     position: {lat: 59.314437, lng: 18.079892 }, 
@@ -43,7 +46,8 @@ const fikaSpots = [
     fsid: '57121614498ecf6b8e78f527',
     visible: true,
     showDetail: false,
-    showActiveMarker: false    },
+    showActiveMarker: false,
+    descriptionFromFoursquare: ''    },
   { id: 5,
     name: 'Its pleat', 
     position: {lat: 59.333076, lng: 18.062543}, 
@@ -52,15 +56,18 @@ const fikaSpots = [
     fsid: '5a203e9914994667b22c9d18',
     visible: true,
     showDetail: false,
-    showActiveMarker: false    }
+    showActiveMarker: false,
+    descriptionFromFoursquare: ''    }
 ]
 
-//set variable for API ids
-const foursquare = require ('react-foursquare') ({
-  clientID: 'DOPTD1QU1GPIORPPZCWFWGNPFT4QSJYXTGRTRXZ4YE21UPA0',
-  clientSecret: 'TST51RI3C3FRZLKIEFQEN3L50GFRMVOG0GGWJKFNWY1FE1OR'
-});
+//set variables for foursquare API 
+let errorHandling = '';
+let clientID= 'SV5JL5T2WASNUJIMCKIENROXLO1PT1NPCPXWK2JTBXKCBBAE';
+let clientSecret= 'XDWX1M35EQDDJVTHJRXUSAGPNYSXZ5SGQY3QNIOXWXSHLSNG';
+let today = new Date();
+let foursquareAPIURL = 'https://api.foursquare.com/v2/venues/'
 
+const tempTest = [];
 
 
 class App extends Component {
@@ -73,7 +80,6 @@ class App extends Component {
       }
   }
 
-
   state = {
     foursquareData: [],
     fikaSpotsState: [],
@@ -81,41 +87,45 @@ class App extends Component {
     errorFetch: ''
   }
 
-
-  
-
   componentDidMount(){
-    //loop through all locations from app.js and set the parameters to the ones needed 
+ //loop through all locations from app.js and set the parameters to the ones needed 
     //for the foursquare api call. This is just a simple call, 
     //that send through the name and lat and long and gets all the matches.
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    //return [year, month, day].join('')
     for (const l of fikaSpots) {
 
+      const fetchURL = foursquareAPIURL+l.fsid+ "/?limit=4&client_id=" + clientID +"&client_secret=" + clientSecret +"&v="+ year+month+day;
 
-      const params = {}
-      params['query'] = l.key
-      params['ll'] = l.ll
-
-      foursquare.venues.getVenues(params)
-      .then(res=> {
-
-      if (!res.ok) {
-        this.setState({
-          apiError: true,
-          errorFetch: "Could not load location address"
+      fetch(fetchURL)
+      .then(function(response) {
+        if (response.status !== 200) {
+          errorHandling = "Sorry data can't be loaded";
+          return;
+        }
+        response.json().then(function(data) {
+          console.log(data.response.venue);
+          //write responses to array
+          tempTest.push(data.response.venue)
+          console.log(tempTest);
         });
-        throw res;
-      }
-    })
-      .then( data => {
-
-        this.setState({ foursquareData: data.response.venues })
-
       })
-      .catch( err => {
-        throw err;
-        console.log('error caught')
-      })
+      .catch(function(err) {
+        errorHandling = "Sorry data can't be loaded";
+      });
+
+/*      foursquare.venues.getVenues(params)
+      .then(res=> {
+        this.setState({ foursquareData: res.response.venues })
+      })*/
+      
     }
   }
 
@@ -190,7 +200,7 @@ class App extends Component {
     }
   }
 
-  showCurrentSearchResults(searchResults) {
+/*  showCurrentSearchResults(searchResults) {
     console.log('called for ', searchResults);
     this.setAllVisibilityToFalse()
     for (const a of searchResults ) {
@@ -200,8 +210,8 @@ class App extends Component {
     console.log('show current search results completed')
 /*    this.setState({
     fikaSpotsState:searchResults
-    })*/
-  }
+    })
+  }*/
 
   onSearchResultChanged = (searchResults, item) => {
     //console.log(SearchResults);
@@ -216,6 +226,9 @@ class App extends Component {
       for (const item of searchResults) {
         item.visible = true
       }
+/*    this.setState({
+        fikaSpotsState:searchResults
+      })*/
 
 
   }
@@ -225,12 +238,12 @@ class App extends Component {
     //from foursquare
     
     for (const l of fikaSpots) {
-      if(this.state.foursquareData){
-        for (const i of this.state.foursquareData) {
+      if(tempTest){
+        for (const i of tempTest) {
           if (i.id === l.fsid) {
                 l.name = i.name
                 l.address = i.location.address
-                //console.log('match')
+                l.descriptionFromFoursquare = i.description
               }
         }
       }
