@@ -8,6 +8,7 @@ div {
 
 .App {
   text-align: center;
+  height: 100%;
 }
 
 /* header */
@@ -27,8 +28,8 @@ div {
 .app-title span {
   font-size: 16px;
   padding: 20px;
-  display: flex;
   color: #2d3c49;
+  font-style: italic;
 }
 
 /* map */
@@ -43,7 +44,6 @@ div {
 /* search bar */
 
 .search-locations-bar {
-  
   top: 0;
   left: 0;
   z-index: 5;
@@ -84,8 +84,16 @@ div {
 
 .locations-list-item {
   padding: 20px;
-  background: white;
+  background: #dbe4f0;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
+  margin: 10px;
+}
 
+.locations-list-item div {
+  padding: 10px;
+  background: #edf2f7;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
+  margin: 10px;
 }
 
 /* marker */
@@ -113,6 +121,13 @@ div {
 
 }
 
+/* footer styles */
+
+footer {
+  font-size: 12px;
+  font-style: italic;
+}
+
 /* responsiveness */
 
 .map-container,
@@ -128,16 +143,19 @@ div {
 
 @media screen  and (max-width: 500px) {
 
-  .map-container div:first-child {
+  /*.map-container div:first-child {
     width: 100% !important;
     order: 10;
     position: relative !important;
     height: 50vh !important;
-  }
+  }*/
   
   .locations-panel {
-    width: 100%;
+    width: 50%;
 
+  }
+  .search-locations-input-wrapper {
+    font-size: 12px;
   }
 
   .search-locations {
@@ -152,6 +170,10 @@ div {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    font-size: 14px;
+  }
+  .locations-list-item div {
+    font-size: 13px;
   }
   .app-title {
     margin-bottom: 0;

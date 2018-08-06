@@ -7,7 +7,7 @@ import LocationPanel from './locationPanel.js'
 
 const fikaSpots = [
   { id: 1,
-    name: 'vete-katten', 
+    name: 'Vete-katten', 
     position:  {lat: 59.33411, lng: 18.058331}, 
     ll: '59.33411, 18.058331',  
     address: 'Not updated from foursquare yet', 
@@ -16,7 +16,7 @@ const fikaSpots = [
     showDetail: false,
     showActiveMarker: false },
   { id: 2,
-    name: 'sovel',
+    name: 'Sovel',
     position: {lat: 59.304716, lng:18.12365}, 
     ll: '59.304716, 18.12365', 
     address: 'Not updated from foursquare yet',  
@@ -25,7 +25,7 @@ const fikaSpots = [
     showDetail: false,
     showActiveMarker: false },
   { id: 3,
-    name: 'johan&nystrom', 
+    name: 'Johan&Nystrom', 
     position: {lat: 59.335335, lng:18.071341}, 
     ll: '59.335335,18.071341',  
     address: 'Not updated from foursquare yet', 
@@ -34,7 +34,7 @@ const fikaSpots = [
     showDetail: false,
     showActiveMarker: false  },
   { id: 4,
-    name: 'fikabaren',
+    name: 'Fikabaren',
     position: {lat: 59.314437, lng: 18.079892 }, 
     ll: '59.314437, 18.079892 ',  
     address: 'Not updated from foursquare yet', 
@@ -43,7 +43,7 @@ const fikaSpots = [
     showDetail: false,
     showActiveMarker: false    },
   { id: 5,
-    name: 'its pleat', 
+    name: 'Its pleat', 
     position: {lat: 59.333076, lng: 18.062543}, 
     ll: '59.333076, 18.062543',  
     address: 'Not updated from foursquare yet', 
@@ -175,8 +175,25 @@ class App extends Component {
     }
     console.log('show current search results completed')
 /*    this.setState({
-      fikaSpotsState: fikaSpots
+    fikaSpotsState:searchResults
     })*/
+  }
+
+  onSearchResultChanged = (searchResults, item) => {
+    //console.log(SearchResults);
+    //ek weet nie of bind hier reg is nie
+    //this.props.showCurrentSearchResultsFunc(searchResults)
+    //doen direk wat in daai f moet gebeur
+    for (const f of this.state.fikaSpotsState) {
+          f.visible = false
+          //console.log('all visibility false')
+          console.log(this.state.fikaSpotsState)
+      }
+      for (const item of searchResults) {
+        item.visible = true
+      }
+
+
   }
 
   render() {
@@ -201,7 +218,7 @@ class App extends Component {
       <div className="App">
         {console.log(fikaSpots)}
             <div className='app-title'>
-              {"Best 'Fika' spots in Stockholm"}
+              <h3>"Best 'Fika' spots in Stockholm"</h3>
               <span>Fika is considered a social institution in Sweden;
               it means having a break, most often a coffee break, 
               with one's colleagues, friends, date or family. Source:
@@ -221,7 +238,7 @@ class App extends Component {
         <LocationPanel
           fikaSpots={fikaSpots}
           toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
-          showCurrentSearchResultsFunc={this.showCurrentSearchResults}
+          onSearchResultChangedFunc={this.onSearchResultChanged}
 
         />
 

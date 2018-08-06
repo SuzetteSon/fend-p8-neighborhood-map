@@ -10,6 +10,7 @@ class LocationPanel extends Component {
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
 		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
+		onSearchResultChanged: PropTypes.func.isRequired
 
 	}
 
@@ -22,30 +23,11 @@ class LocationPanel extends Component {
 		//console.log(id);
 		//fix die!
 		this.props.toggleFuncLoc(id)
-		this.setState({
+/*		this.setState({
 			fikaSpotsState: this.props.fikaSpots
-		})
+		})*/
 
 	}
-
-
-	onSearchResultChanged = (searchResults, item) => {
-		//console.log(SearchResults);
-		//ek weet nie of bind hier reg is nie
-		//this.props.showCurrentSearchResultsFunc(searchResults)
-		//doen direk wat in daai f moet gebeur
-		for (const f of this.state.fikaSpotsState) {
-      		f.visible = false
-      		//console.log('all visibility false')
-      		console.log(this.state.fikaSpotsState)
-    	}
-    	for (const item of searchResults) {
-	      item.visible = true
-    	}
-
-
-	}
-
 	
 	// function to udate state of query
 	updateQuery = (query) => {
@@ -69,7 +51,7 @@ class LocationPanel extends Component {
 				console.log('hier')
 				//call n funksie wat die groot funksie roep.
 				for (let loc of listLocations) { 
-					this.onSearchResultChanged(listLocations, loc)
+					this.props.onSearchResultChangedFunc(listLocations, loc)
 					//ek dink probeer die search deel in a aparte component
 					//as jy daarna nogsteeds dieselfde error kry van not a function, 
 					//probeer miskien dit in the app.js direk doen?

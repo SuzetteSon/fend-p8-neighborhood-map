@@ -24,8 +24,6 @@ class MapComp extends Component {
 	}
 
 
-
-
 	render() {
 
 		
@@ -43,7 +41,7 @@ class MapComp extends Component {
 
 						google = {this.props.google}
 						initialCenter={{ lat: 59.329323, lng: 18.068581 }}
-						zoom={13}
+						zoom={12.5}
 						role={"application"}
 						>
 						{this.state.fikaSpotsState.map(l => { //load as active and visible marker
