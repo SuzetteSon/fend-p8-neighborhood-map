@@ -138,20 +138,46 @@ class App extends Component {
   //function  to call other functions to set only the current 
   //fika spot to show details and show active marker tue
   setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue(id) {
-    console.log('called for ' + id);
+    //console.log('called for ' + id);
     this.setAllShowDetailsToFalse();
     this.setAllShowActiveMarkersToFalse();
     this.setThisShowActiveDetailToTrue(id);
     this.setThisShowActiveMarkerToTrue(id);
-    console.log('done', fikaSpots);
+    //console.log('done', fikaSpots);
     //this.forceUpdate()
     this.setState({
     fikaSpotsState:fikaSpots
     })
   }
 
+  setAllVisibilityToFalse() {
+    for (const f of fikaSpots) {
+      f.visible = false
+      console.log('all visibility false')
+    }
+  }
 
+  setFikaSpotVisibilityToTrue(id) {
+    for (const f of fikaSpots) {
+      if (f.id === id) {
+        console.log(id + 'visible')
+        f.visible = true
+      }
+    }
+  }
 
+  showCurrentSearchResults(searchResults) {
+    console.log('called for ', searchResults);
+    this.setAllVisibilityToFalse()
+    for (const a of searchResults ) {
+      this.setFikaSpotVisibilityToTrue(a.id)
+      console.log('visibility set to true')
+    }
+    console.log('show current search results completed')
+/*    this.setState({
+      fikaSpotsState: fikaSpots
+    })*/
+  }
 
   render() {
     //loop through and match the results in the two arrays on ID in order to add the address 
@@ -174,7 +200,15 @@ class App extends Component {
       
       <div className="App">
         {console.log(fikaSpots)}
-        
+            <div className='app-title'>
+              {"Best 'Fika' spots in Stockholm"}
+              <span>Fika is considered a social institution in Sweden;
+              it means having a break, most often a coffee break, 
+              with one's colleagues, friends, date or family. Source:
+              <a href='https://sv.wikipedia.org/wiki/Fika'> Wikipedia</a>
+              </span>
+
+            </div>
 
 
         <MapComp
@@ -187,9 +221,13 @@ class App extends Component {
         <LocationPanel
           fikaSpots={fikaSpots}
           toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
+          showCurrentSearchResultsFunc={this.showCurrentSearchResults}
 
         />
 
+        <footer>
+        Address information provided by FourSquare API
+        </footer>
 
 
 

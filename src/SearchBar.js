@@ -2,71 +2,58 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 
+class SearchBar extends Component {
 
-
-class LocationPanel extends Component {
-
-	//set prototypes to us from Map comp
+	//set prototypes to us from App comp
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
 		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
-
+		showCurrentSearchResults: PropTypes.func.isRequired,
+		fikaSpotsState: PropTypes.array.isRequired
 	}
 
 	state = {
-		fikaSpotsState: [],
+		fikaSpotsState: this.props.fikaSpots,
 		query: ''
 	}
-
-	onLocationClick(id) {
-		//console.log(id);
-		//fix die!
-		this.props.toggleFuncLoc(id)
-		this.setState({
-			fikaSpotsState: this.props.fikaSpots
-		})
-
-	}
-
 
 	onSearchResultChanged = (searchResults, item) => {
 		//console.log(SearchResults);
 		//ek weet nie of bind hier reg is nie
 		//this.props.showCurrentSearchResultsFunc(searchResults)
 		//doen direk wat in daai f moet gebeur
-		for (const f of this.state.fikaSpotsState) {
+		for (const f of this.props.fikaSpots) {
       		f.visible = false
       		//console.log('all visibility false')
-      		console.log(this.state.fikaSpotsState)
     	}
     	for (const item of searchResults) {
 	      item.visible = true
-    	}
+    }
+		//console.log('SearchResults klaar');
+		console.log(searchResults);
 
 
 	}
 
-	
+
 	// function to udate state of query
 	updateQuery = (query) => {
 		
 		this.setState({ query:query.trim() })
-		this.setState({
-			fikaSpotsState: this.props.fikaSpots
-		})
-		console.log(this.state.fikaSpotsState)
+/*		this.setState({
+			fikaSpotsState: this.props.fikaSpotsState
+		})*/
 	}
 
+	render(){
 
-	render() {
-
-						//this is the search logic
+				//this is the search logic
 		let listLocations
 		if (this.state.query) {
 			
 			const match = new RegExp(escapeRegExp(this.state.query), 'i')
 			listLocations = this.state.fikaSpotsState.filter((loc) => match.test(loc.name))
-				console.log('hier')
+			//console.log('hier')
 				//call n funksie wat die groot funksie roep.
 				for (let loc of listLocations) { 
 					this.onSearchResultChanged(listLocations, loc)
@@ -74,27 +61,27 @@ class LocationPanel extends Component {
 					//as jy daarna nogsteeds dieselfde error kry van not a function, 
 					//probeer miskien dit in the app.js direk doen?
 					//this.onLocationClick.bind(this, 1)
-					//console.log(this.state.fikaSpotsState)
-					console.log('daar')
+					console.log(this.state.fikaSpotsState)
 				}
-				//listLocations = this.state.fikaSpotsState
+				listLocations = this.state.fikaSpotsState
+			
+
+			
 
 		} else {
 			listLocations = this.state.fikaSpotsState
 			//console.log(listLocations)
 		}
 
+		return (
 
-		return(
-
-			<div className='locations-panel'>
-
+			<div>
 				<div className="search-locations">
 				        <div className="search-locations-bar">
 				              <div className="search-locations-input-wrapper">
 				                <input 
 				                	role={"search"}
-				                	tabIndex={0}
+				                	tabindex={0}
 				                	aria-labelledby={"text filter"}
 				                	type="text" 
 				                	placeholder="Search Coffee Shop"
@@ -104,56 +91,11 @@ class LocationPanel extends Component {
 				              </div>
 			            </div>  
 			        </div>
-				
-				
-		        <div className="search-locations-results">
+			</div>
 
-		          	<div>
-		          		{/* ordered list to render locations in  */}
-				        <div className='locations-list'>
-				        	{this.props.fikaSpots.map(l => {
-				        		if (l.visible && l.showDetail) {
-				        			return (
-										<div key={l.fsid}
-					        			id={l.id}
-					        			role={"link"} 
-					        			className='locations-list-item'
-					        			onClick={this.onLocationClick.bind(this, l.id)}
-					        			tabIndex={0}
 
-					        			>
-						        		{l.name}
-							        	
-							        		<div>
-							        			{l.address}
-							        		</div>
-						        		</div>
-									)
-				        			
-								} else if (l.visible) {
-									return (
-										<div key={l.fsid}
-					        			id={l.id} 
-					        			role={"link"} 
-					        			className='locations-list-item'
-					        			onClick={this.onLocationClick.bind(this, l.id)}
-					        			tabindex={0}
-					        			>
-						        		{l.name}
-							        	
-						        		</div>
-									)
-								} 		
-				        	}
-				        		)}
-				        </div>
-
-		            </div>
-		        </div>
-		    </div>
-		)
+			)
 	}
-		
 }
 
-export default LocationPanel;
+export default SearchBar
