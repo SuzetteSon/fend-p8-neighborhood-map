@@ -95,6 +95,9 @@ div {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
   margin: 10px;
 }
+.loc-info {
+  background: #b3e6ff;
+}
 
 /* marker */
 
@@ -181,7 +184,6 @@ footer {
   .app-header {
     padding-top: 20px;
   }
-
 }
 
 

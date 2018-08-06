@@ -74,17 +74,13 @@ class MapComp extends Component {
 									</Marker>
 							} 
 						}
-					        		)}
-
-	                				
+					        		)}		
 				</Map>
-
 			</div>
-
-
 		)
 	}
 }
+
 export default GoogleApiWrapper({
 	apiKey: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'
 })(MapComp)

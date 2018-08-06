@@ -2,7 +2,7 @@
 
 *Fika is the swedish verb for enjoying coffee and something to eat with friends or family*
 
-I was tasked to create  a single-page application using React featuring a map of my neighborhood (Stockholm). I added additional functionality to this application, including: map markers to identify my favourite 'fika' spots, a search function to easily discover these locations, and a list view to support simple browsing of all of my locations. I made use of the FourSquare API to provide additional information (the address) about each of these locations.
+I was tasked to create  a single-page application using React featuring a map of my neighborhood (Stockholm). I added additional functionality to this application, including: map markers to identify my favourite 'fika' spots, a search function to easily discover these locations, and a list view to support simple browsing of all of my locations. I made use of the FourSquare API to provide additional information (the address & rating) about each of these locations.
 
 ## Prerequisite
 
@@ -25,9 +25,10 @@ To be able to test the ServiceWorker:
 ## Third Party Libraries
 
 * Google Maps API for the map
-* FourSquare API for the additional information (address)
+* FourSquare API for the additional information (address & rating)
+* `google-map-react` from npm
 
-**NOTE** Client ID & Secrets have been removed - to add your own client id and secret, please visit [FourSquare Api](https://developer.foursquare.com/) and [Google Maps API](https://console.developers.google.com/apis/)
+**NOTE** Client ID & Secrets have been removed - to add your own client id and secret, please visit [FourSquare Api](https://developer.foursquare.com/) and [Google Maps API](https://console.developers.google.com/apis/) Add Google Maps ID in MapComp.js Component on line 102. Add Foursquare APi id & client secret in App.js on lines 66 & 68
 
 
 ## Create React App

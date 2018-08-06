@@ -17,7 +17,7 @@ const fikaSpots = [
     visible: true,
     showDetail: false,
     showActiveMarker: false,
-    descriptionFromFoursquare: '' },
+    rating: 'Not updated from foursquare yet' },
   { id: 2,
     name: 'Sovel',
     position: {lat: 59.304716, lng:18.12365}, 
@@ -27,7 +27,7 @@ const fikaSpots = [
     visible: true,
     showDetail: false,
     showActiveMarker: false,
-    descriptionFromFoursquare: '' },
+    rating: 'Not updated from foursquare yet' },
   { id: 3,
     name: 'Johan&Nystrom', 
     position: {lat: 59.335335, lng:18.071341}, 
@@ -37,7 +37,7 @@ const fikaSpots = [
     visible: true,
     showDetail: false,
     showActiveMarker: false,
-    descriptionFromFoursquare: ''  },
+    rating: 'Not updated from foursquare yet'  },
   { id: 4,
     name: 'Fikabaren',
     position: {lat: 59.314437, lng: 18.079892 }, 
@@ -47,7 +47,7 @@ const fikaSpots = [
     visible: true,
     showDetail: false,
     showActiveMarker: false,
-    descriptionFromFoursquare: ''    },
+    rating: 'Not updated from foursquare yet'    },
   { id: 5,
     name: 'Its pleat', 
     position: {lat: 59.333076, lng: 18.062543}, 
@@ -57,18 +57,19 @@ const fikaSpots = [
     visible: true,
     showDetail: false,
     showActiveMarker: false,
-    descriptionFromFoursquare: ''    }
+    rating: 'Not updated from foursquare yet'    }
 ]
 
 //set variables for foursquare API 
 let errorHandling = '';
-let clientID= 'SV5JL5T2WASNUJIMCKIENROXLO1PT1NPCPXWK2JTBXKCBBAE';
-let clientSecret= 'XDWX1M35EQDDJVTHJRXUSAGPNYSXZ5SGQY3QNIOXWXSHLSNG';
+//add your foursquare clientid here
+let clientID= '';
+//add your foursquare clientsecret here
+let clientSecret= '';
 let today = new Date();
 let foursquareAPIURL = 'https://api.foursquare.com/v2/venues/'
 
-const tempTest = [];
-
+const responseFromFS = [];
 
 class App extends Component {
 
@@ -88,9 +89,8 @@ class App extends Component {
   }
 
   componentDidMount(){
- //loop through all locations from app.js and set the parameters to the ones needed 
-    //for the foursquare api call. This is just a simple call, 
-    //that send through the name and lat and long and gets all the matches.
+
+    //setup date in the correct format for the foursquare api call
     var d = new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -99,7 +99,7 @@ class App extends Component {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
-    //return [year, month, day].join('')
+    //loop through each fikaspot and call foursquare
     for (const l of fikaSpots) {
 
       const fetchURL = foursquareAPIURL+l.fsid+ "/?limit=4&client_id=" + clientID +"&client_secret=" + clientSecret +"&v="+ year+month+day;
@@ -111,21 +111,21 @@ class App extends Component {
           return;
         }
         response.json().then(function(data) {
-          console.log(data.response.venue);
+          //console.log(data.response.venue);
           //write responses to array
-          tempTest.push(data.response.venue)
-          console.log(tempTest);
+          responseFromFS.push(data.response.venue)
+          //console.log(responseFromFS);
         });
       })
       .catch(function(err) {
         errorHandling = "Sorry data can't be loaded";
-      });
 
-/*      foursquare.venues.getVenues(params)
-      .then(res=> {
-        this.setState({ foursquareData: res.response.venues })
-      })*/
-      
+      })
+      .then(response =>{
+        this.setState({
+                fikaSpotsState:fikaSpots
+            })
+      });
     }
   }
 
@@ -162,7 +162,6 @@ class App extends Component {
   setThisShowActiveDetailToTrue(id) {
     for (const f of fikaSpots) {
       if (f.id === id) {
-        //console.log('id hier')
         f.showDetail = true
       }
     }
@@ -170,80 +169,42 @@ class App extends Component {
 
 
   //function  to call other functions to set only the current 
-  //fika spot to show details and show active marker tue
+  //fika spot to show details and show active marker true
   setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue(id) {
-    //console.log('called for ' + id);
     this.setAllShowDetailsToFalse();
     this.setAllShowActiveMarkersToFalse();
     this.setThisShowActiveDetailToTrue(id);
     this.setThisShowActiveMarkerToTrue(id);
-    //console.log('done', fikaSpots);
-    //this.forceUpdate()
     this.setState({
     fikaSpotsState:fikaSpots
     })
   }
 
-  setAllVisibilityToFalse() {
+  setAllVisibilityToFalse = () => {
     for (const f of fikaSpots) {
       f.visible = false
-      console.log('all visibility false')
     }
   }
 
-  setFikaSpotVisibilityToTrue(id) {
+  setFikaSpotVisibilityToTrue = (id) => {
     for (const f of fikaSpots) {
       if (f.id === id) {
-        console.log(id + 'visible')
         f.visible = true
       }
     }
   }
 
-/*  showCurrentSearchResults(searchResults) {
-    console.log('called for ', searchResults);
-    this.setAllVisibilityToFalse()
-    for (const a of searchResults ) {
-      this.setFikaSpotVisibilityToTrue(a.id)
-      console.log('visibility set to true')
-    }
-    console.log('show current search results completed')
-/*    this.setState({
-    fikaSpotsState:searchResults
-    })
-  }*/
-
-  onSearchResultChanged = (searchResults, item) => {
-    //console.log(SearchResults);
-    //ek weet nie of bind hier reg is nie
-    //this.props.showCurrentSearchResultsFunc(searchResults)
-    //doen direk wat in daai f moet gebeur
-    for (const f of this.state.fikaSpotsState) {
-          f.visible = false
-          //console.log('all visibility false')
-          console.log(this.state.fikaSpotsState)
-      }
-      for (const item of searchResults) {
-        item.visible = true
-      }
-/*    this.setState({
-        fikaSpotsState:searchResults
-      })*/
-
-
-  }
 
   render() {
-    //loop through and match the results in the two arrays on ID in order to add the address 
+    //loop through and match the results in the two arrays on ID in order to add the info 
     //from foursquare
-    
     for (const l of fikaSpots) {
-      if(tempTest){
-        for (const i of tempTest) {
+      if(responseFromFS){
+        for (const i of responseFromFS) {
           if (i.id === l.fsid) {
                 l.name = i.name
                 l.address = i.location.address
-                l.descriptionFromFoursquare = i.description
+                l.rating = i.rating
               }
         }
       }
@@ -253,7 +214,6 @@ class App extends Component {
     return (
       
       <div className="App">
-        {console.log(fikaSpots)}
             <div className='app-title'>
               <h3>"Best 'Fika' spots in Stockholm"</h3>
               <span>Fika is considered a social institution in Sweden;
@@ -276,17 +236,16 @@ class App extends Component {
           fikaSpots={fikaSpots}
           toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
           onSearchResultChangedFunc={this.onSearchResultChanged}
-
+          setAllVisibilityToFalseFunc={this.setAllVisibilityToFalse}
+          setFikaSpotVisibilityToTrueFunc={this.setFikaSpotVisibilityToTrue}
         />
-        <div>
-          {this.state.apiError && <h1>{this.state.errorFetch}</h1>}
-        </div>
+
         <footer>
-        Address information provided by FourSquare API
+        Address information provided by FourSquare API 
+          <div>
+          {errorHandling}
+          </div>
         </footer>
-
-
-
       </div>
     )
   
