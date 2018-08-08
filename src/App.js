@@ -107,10 +107,8 @@ class App extends Component {
           return;
         }
         response.json().then(function(data) {
-          //console.log(data.response.venue);
           //write responses to array
           responseFromFS.push(data.response.venue)
-          //console.log(responseFromFS);
         });
       })
       .catch(function(err) {
@@ -172,12 +170,14 @@ class App extends Component {
     //essential for communication between componenents
   }
 
+  //function to set all items to invisible
   setAllVisibilityToFalse() {
     for (const f of fikaSpots) {
       f.visible = false
     }
   }
 
+  //function to set the active item to visible
   setFikaSpotVisibilityToTrue = (id) => {
     for (const f of fikaSpots) {
       if (f.id === id) {
@@ -186,7 +186,7 @@ class App extends Component {
     }
   }
 
-  // function to udate state of query
+  // function to udate state of query of input
   updateQuery = (query) => {
     this.setState({ query:query.trim() })
   }
@@ -216,6 +216,7 @@ class App extends Component {
       this.setAllVisibilityToFalse()
       
       for(let sresults of searchResults){
+        //cal function that sets the current item to visible
         this.setFikaSpotVisibilityToTrue(sresults.id)
       }
     }

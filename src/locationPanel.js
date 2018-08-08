@@ -17,6 +17,7 @@ class LocationPanel extends Component {
 	}
 
 	onLocationClick(id) {
+		//cal function from App.js line 162
 		this.props.toggleFuncLoc(id)
 	}
 	
@@ -29,7 +30,7 @@ class LocationPanel extends Component {
 		          		{/* div to render locations in  */}
 				        <div className='locations-list'>
 				        	{this.props.fikaSpots.map(l => {
-				        		if (l.visible && l.showDetail) {
+				        		if (l.visible && l.showDetail) { // only render when visible & details are shown 
 				        			return (
 										<div key={l.fsid}
 					        			id={l.id}
@@ -39,7 +40,7 @@ class LocationPanel extends Component {
 					        			tabIndex={0}
 					        			>
 						        		{l.name}
-							        	
+							        	{/* div to render additional info in  */}
 							        		<div>
 							        			<div className='loc-info' tabIndex={0}>
 							        				Address: {l.address}
@@ -51,7 +52,7 @@ class LocationPanel extends Component {
 						        		</div>
 									)
 				        			
-								} else if (l.visible) {
+								} else if (l.visible) { //only render when visible
 									return (
 										<div key={l.fsid}
 					        			id={l.id} 
