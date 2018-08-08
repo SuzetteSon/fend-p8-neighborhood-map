@@ -16,19 +16,19 @@ class MapComp extends Component {
 	//set new empty state for fikaSpots array
 	state = {
 		fikaSpotsState: this.props.fikaSpots
+		//essential for map markers to show on load
 	}
 
 	onMarkerClick = (props, marker, e) => {
 		this.props.toggleFunc(marker.name)
-		this.setState({
+/*		this.setState({
 			fikaSpotsState: this.props.fikaSpots
-		})	
+		})	*/
+		//seem of die nie nodig is nie
 	}
-
 
 	render() {
 
-		
 		const style = {
 			height: '100vh',
   			width: '50%',
@@ -46,7 +46,7 @@ class MapComp extends Component {
 						zoom={12.5}
 						role={"application"}
 						>
-						{this.state.fikaSpotsState.map(l => { //load as active and visible marker
+						{this.props.fikaSpots.map(l => { //load as active and visible marker
 							if ((l.visible === true)&&(l.showActiveMarker === true)) {
 								return <Marker 
 										key={l.fsid}
@@ -82,7 +82,7 @@ class MapComp extends Component {
 }
 
 export default GoogleApiWrapper({
-	apiKey: 'AIzaSyB22o9GOGwBbO3u6tUacs4or8gxnFmI9jU'
+	apiKey: '' // add your google map id here
 })(MapComp)
 
 

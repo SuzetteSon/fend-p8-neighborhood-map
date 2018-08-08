@@ -76,9 +76,8 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue = this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue.bind(this)
-      this.state={
-        data: ""
-      }
+      //essential for functions to work
+
   }
 
   state = {
@@ -121,11 +120,13 @@ class App extends Component {
         errorHandling = "Sorry data can't be loaded";
 
       })
-      .then(response =>{
+/*      .then(response =>{
         this.setState({
                 fikaSpotsState:fikaSpots
             })
-      });
+
+    //not sure if the above .then is necessary
+      });*/
     }
   }
 
@@ -146,6 +147,9 @@ class App extends Component {
       f.showActiveMarker = false
 
     }
+/*    this.setState({
+      fikaSpotsState:fikaSpots
+    })*/
   }
 
   //function to set the current activeMarker to true
@@ -178,12 +182,14 @@ class App extends Component {
     this.setState({
     fikaSpotsState:fikaSpots
     })
+    //essential for communication between componenents
   }
 
-  setAllVisibilityToFalse = () => {
+  setAllVisibilityToFalse() {
     for (const f of fikaSpots) {
       f.visible = false
     }
+
   }
 
   setFikaSpotVisibilityToTrue = (id) => {
@@ -192,6 +198,9 @@ class App extends Component {
         f.visible = true
       }
     }
+    /*    this.setState({
+      fikaSpotsState:fikaSpots
+    })*/
   }
 
 
@@ -235,7 +244,7 @@ class App extends Component {
         <LocationPanel
           fikaSpots={fikaSpots}
           toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
-          onSearchResultChangedFunc={this.onSearchResultChanged}
+
           setAllVisibilityToFalseFunc={this.setAllVisibilityToFalse}
           setFikaSpotVisibilityToTrueFunc={this.setFikaSpotVisibilityToTrue}
         />

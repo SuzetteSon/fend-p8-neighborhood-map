@@ -2,20 +2,20 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 
-class LocationPanel extends Component {
+let searchResults
 
+class LocationPanel extends Component {
 
 	//set prototypes to us from Map comp
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
 		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
-		onSearchResultChanged: PropTypes.func.isRequired,
 		setFikaSpotVisibilityToTrue: PropTypes.func.isRequired,
 		setAllVisibilityToFalse: PropTypes.func.isRequired
 	}
 
 	state = {
-		fikaSpotsState: [],
+		fikaSpotsState: searchResults,
 		query: ''
 	}
 
@@ -25,36 +25,37 @@ class LocationPanel extends Component {
 	
 	// function to udate state of query
 	updateQuery = (query) => {
+
 		
 		this.setState({ query:query.trim() })
 		this.setState({
 			fikaSpotsState: this.props.fikaSpots
 		})
-	}
+		//seem nie meer nodig nie
 
+	}
 
 	render() {
 
 		//this is the search functionality
-		let searchResults
+		
+
 		if (this.state.query) {
 			
 			const match = new RegExp(escapeRegExp(this.state.query), 'i')
-			searchResults = this.state.fikaSpotsState.filter((loc) => match.test(loc.name))
-				
-
+			searchResults = this.props.fikaSpots.filter((loc) => match.test(loc.name))
+			//console.log(this.props.fikaSpots)	
 			this.props.setAllVisibilityToFalseFunc()
-
+			//console.log(this.props.fikaSpots)
+			
 			for(let sresults of searchResults){
 				this.props.setFikaSpotVisibilityToTrueFunc(sresults.id)
-
 			}
-			this.setState.bind({fikaSpotsState: this.props.fikaSpots})
+			console.log(this.props.fikaSpots)
 
-		} else {
+		} /*else {
 			searchResults = this.state.fikaSpotsState
-		}
-
+		}*/
 
 		return(
 
@@ -76,7 +77,6 @@ class LocationPanel extends Component {
 				        </div>
 			        </div>  
 			    </div>
-				
 				
 		        <div className="search-locations-results">
 
