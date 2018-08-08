@@ -2,29 +2,29 @@ import React, {Component} from 'react';
 import { GoogleApiWrapper,  Map, Marker } from 'google-maps-react';
 import PropTypes from 'prop-types';
 
-
-
 class MapComp extends Component {
 
-	//set prototypes to us from Map comp
+	//set prototypes to use from App comp
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
-		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired
-
+		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
 	}
 
-	//set new empty state for fikaSpots array
 	state = {
-		fikaSpotsState: this.props.fikaSpots
+		fikaSpotsState: this.props.fikaSpots,
 		//essential for map markers to show on load
+	}
+
+	gm_authFailure() {
+	  alert('Unfortunately, the map could not be loaded at this time :( Please check that you have the correct API key and refresh the page.')
+	}
+
+	componentDidMount() {
+		window.gm_authFailure = this.gm_authFailure;
 	}
 
 	onMarkerClick = (props, marker, e) => {
 		this.props.toggleFunc(marker.name)
-/*		this.setState({
-			fikaSpotsState: this.props.fikaSpots
-		})	*/
-		//seem of die nie nodig is nie
 	}
 
 	render() {
@@ -34,8 +34,6 @@ class MapComp extends Component {
   			width: '50%',
   			cssFloat: 'right'
 		};
-
-		console.log(Map)
 
 		return (
 			<div className='map-container'
@@ -57,10 +55,8 @@ class MapComp extends Component {
 										position={l.position} 
 										onClick={this.onMarkerClick}
 										icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
-										
 										> 
-
-									</Marker>
+										</Marker>
 							}
 							else if (l.visible === true) { //load visible marker only
 								return <Marker 
@@ -70,10 +66,8 @@ class MapComp extends Component {
 										position={l.position} 
 										onClick={this.onMarkerClick}
 										icon={'http://maps.google.com/mapfiles/ms/icons/red-dot.png'}
-										
 										> 
-
-									</Marker>
+										</Marker>
 							} 
 						}
 					        		)}		

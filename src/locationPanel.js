@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-
 class LocationPanel extends Component {
 
-	//set prototypes to us from Map comp
+	//set prototypes to use from App comp
 	static protoTypes = {
 		fikaSpots: PropTypes.array.isRequired,
 		setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue: PropTypes.func.isRequired,
@@ -21,20 +20,13 @@ class LocationPanel extends Component {
 		this.props.toggleFuncLoc(id)
 	}
 	
-
-
 	render() {
 
-
-
 		return(
-
-			<div className='locations-panel'>
-				
+			<div className='locations-panel'>			
 		        <div className="search-locations-results">
-
 		          	<div>
-		          		{/* ordered list to render locations in  */}
+		          		{/* div to render locations in  */}
 				        <div className='locations-list'>
 				        	{this.props.fikaSpots.map(l => {
 				        		if (l.visible && l.showDetail) {
@@ -45,19 +37,15 @@ class LocationPanel extends Component {
 					        			className='locations-list-item'
 					        			onClick={this.onLocationClick.bind(this, l.id)}
 					        			tabIndex={0}
-
 					        			>
 						        		{l.name}
 							        	
 							        		<div>
 							        			<div className='loc-info' tabIndex={0}>
 							        				Address: {l.address}
-							        				
 							        			</div>
-							        			
 							        			<div className='loc-info' tabIndex={0}>
 							        				FourSquare Rating: { l.rating}
-							        				
 							        			</div>
 							        		</div>
 						        		</div>
@@ -73,20 +61,17 @@ class LocationPanel extends Component {
 					        			tabIndex={0}
 					        			>
 						        		{l.name}
-							        	
 						        		</div>
 									)
 								} 		
 				        	}
 				        		)}
 				        </div>
-		
 		            </div>
 		        </div>
 		    </div>
 		)
 	}
-		
 }
 
 export default LocationPanel;

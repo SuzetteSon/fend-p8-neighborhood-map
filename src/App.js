@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import MapComp from './mapComp.js'
-import LocationPanel from './locationPanel.js'
+import MapComp from './mapComp.js';
+import LocationPanel from './locationPanel.js';
 import escapeRegExp from 'escape-string-regexp';
-
-function gm_authFailure(){
-  alert('Failed to load Google Maps, try refreshig the page')
-}
 
 const fikaSpots = [
   { id: 1,
@@ -78,14 +74,14 @@ class App extends Component {
     super(props);
       this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue = this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue.bind(this)
       //essential for functions to work
-
   }
 
   state = {
     foursquareData: [],
     fikaSpotsState: [],
     apiError: false,
-    errorFetch: ''
+    errorFetch: '',
+    query: ''
   }
 
   componentDidMount(){
@@ -125,12 +121,9 @@ class App extends Component {
         this.setState({
                 fikaSpotsState:fikaSpots
             })
-
-    //not sure if the above .then is necessary
       });*/
     }
   }
-
 
   //functions
 
@@ -138,7 +131,6 @@ class App extends Component {
   setAllShowDetailsToFalse() {
     for (const f of fikaSpots) {
       f.showDetail = false
-      //console.log(f)
     }
   }
 
@@ -146,11 +138,7 @@ class App extends Component {
   setAllShowActiveMarkersToFalse() {
     for (const f of fikaSpots) {
       f.showActiveMarker = false
-
     }
-/*    this.setState({
-      fikaSpotsState:fikaSpots
-    })*/
   }
 
   //function to set the current activeMarker to true
@@ -159,7 +147,6 @@ class App extends Component {
       if (f.id === id) {
         f.showActiveMarker = true
       }
-
     }
   }
 
@@ -171,7 +158,6 @@ class App extends Component {
       }
     }
   }
-
 
   //function  to call other functions to set only the current 
   //fika spot to show details and show active marker true
@@ -190,7 +176,6 @@ class App extends Component {
     for (const f of fikaSpots) {
       f.visible = false
     }
-
   }
 
   setFikaSpotVisibilityToTrue = (id) => {
@@ -199,22 +184,12 @@ class App extends Component {
         f.visible = true
       }
     }
-    /*    this.setState({
-      fikaSpotsState:fikaSpots
-    })*/
   }
 
   // function to udate state of query
   updateQuery = (query) => {
-
-    
     this.setState({ query:query.trim() })
-    this.setState({
-      fikaSpotsState: this.props.fikaSpots
-    })
-    //seem nie meer nodig nie
   }
-
 
   render() {
     //loop through and match the results in the two arrays on ID in order to add the info 
@@ -231,24 +206,20 @@ class App extends Component {
       }
     }
 
-        //this is the search functionality
+    //this is the search functionality
     let searchResults;
     if (this.state.query) {
       
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       searchResults = fikaSpots.filter((loc) => match.test(loc.name))
-      //console.log(this.props.fikaSpots) 
+      //cal function that sets all the items in fikaSpots to invisible
       this.setAllVisibilityToFalse()
-      //console.log(this.props.fikaSpots)
       
       for(let sresults of searchResults){
         this.setFikaSpotVisibilityToTrue(sresults.id)
       }
-      console.log(this.props.fikaSpots)
-
     }
 
- 
     return (
       
       <div className="App">
@@ -259,7 +230,6 @@ class App extends Component {
               with one's colleagues, friends, date or family. Source:
               <a href='https://sv.wikipedia.org/wiki/Fika'> Wikipedia</a>
               </span>
-
             </div>
 
         <div className="search-locations" id='location'>
@@ -287,20 +257,21 @@ class App extends Component {
 
           <LocationPanel
             fikaSpots={fikaSpots}
+            // to export a function with a parameter
             toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
             setAllVisibilityToFalseFunc={this.setAllVisibilityToFalse}
+            // to export a function with a parameter
             setFikaSpotVisibilityToTrueFunc={this.setFikaSpotVisibilityToTrue}
           />
 
         <footer>
-        Address information provided by FourSquare API 
+        Additional information provided by FourSquare API 
           <div>
           {errorHandling}
           </div>
         </footer>
       </div>
     )
-  
   }
 }
 
