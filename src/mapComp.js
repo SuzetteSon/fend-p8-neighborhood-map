@@ -35,6 +35,8 @@ class MapComp extends Component {
   			cssFloat: 'right'
 		};
 
+		console.log(Map)
+
 		return (
 			<div className='map-container'
 				style={style}

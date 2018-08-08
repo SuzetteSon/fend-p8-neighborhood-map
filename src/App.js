@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MapComp from './mapComp.js'
 import LocationPanel from './locationPanel.js'
+import escapeRegExp from 'escape-string-regexp';
 
 function gm_authFailure(){
   alert('Failed to load Google Maps, try refreshig the page')
@@ -203,6 +204,17 @@ class App extends Component {
     })*/
   }
 
+  // function to udate state of query
+  updateQuery = (query) => {
+
+    
+    this.setState({ query:query.trim() })
+    this.setState({
+      fikaSpotsState: this.props.fikaSpots
+    })
+    //seem nie meer nodig nie
+  }
+
 
   render() {
     //loop through and match the results in the two arrays on ID in order to add the info 
@@ -219,6 +231,23 @@ class App extends Component {
       }
     }
 
+        //this is the search functionality
+    let searchResults;
+    if (this.state.query) {
+      
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      searchResults = fikaSpots.filter((loc) => match.test(loc.name))
+      //console.log(this.props.fikaSpots) 
+      this.setAllVisibilityToFalse()
+      //console.log(this.props.fikaSpots)
+      
+      for(let sresults of searchResults){
+        this.setFikaSpotVisibilityToTrue(sresults.id)
+      }
+      console.log(this.props.fikaSpots)
+
+    }
+
  
     return (
       
@@ -233,21 +262,35 @@ class App extends Component {
 
             </div>
 
+        <div className="search-locations" id='location'>
+            <div className="search-locations-bar">
+                <div className="search-locations-input-wrapper" id='input'>
+                    <input
+                        role={"search"}
+                        tabIndex={0}
+                        aria-labelledby={"location input"}
+                        type="text" 
+                        placeholder="Search Coffee Shop"
+                        value={this.state.query}
+                        onChange={(event) => this.updateQuery(event.target.value)}
+                        onLoad={(event) => this.updateQuery(event.target.value)}
+                        />
+                </div>
+              </div>  
+          </div>
 
-        <MapComp
+          <MapComp
           fikaSpots={fikaSpots}
           // to export a function with a parameter
           toggleFunc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
+          />
 
-
-        />
-        <LocationPanel
-          fikaSpots={fikaSpots}
-          toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
-
-          setAllVisibilityToFalseFunc={this.setAllVisibilityToFalse}
-          setFikaSpotVisibilityToTrueFunc={this.setFikaSpotVisibilityToTrue}
-        />
+          <LocationPanel
+            fikaSpots={fikaSpots}
+            toggleFuncLoc={this.setOnlyCurrentFikaSpotToShowDetailsAndShowActiveMarkerToTrue}
+            setAllVisibilityToFalseFunc={this.setAllVisibilityToFalse}
+            setFikaSpotVisibilityToTrueFunc={this.setFikaSpotVisibilityToTrue}
+          />
 
         <footer>
         Address information provided by FourSquare API 

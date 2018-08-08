@@ -28,7 +28,7 @@ To be able to test the ServiceWorker:
 * FourSquare API for the additional information (address & rating)
 * `google-map-react` from npm
 
-**NOTE** Client ID & Secrets have been removed - to add your own client id and secret, please visit [FourSquare Api](https://developer.foursquare.com/) and [Google Maps API](https://console.developers.google.com/apis/) Add Google Maps ID in MapComp.js Component on line 102. Add Foursquare APi id & client secret in App.js on lines 66 & 68
+**NOTE** Client ID & Secrets have been removed - to add your own client id and secret, please visit [FourSquare Api](https://developer.foursquare.com/) and [Google Maps API](https://console.developers.google.com/apis/) Add Google Maps ID in MapComp.js Component on line 84. Add Foursquare APi id & client secret in App.js on lines 66 & 68
 
 
 ## Create React App
