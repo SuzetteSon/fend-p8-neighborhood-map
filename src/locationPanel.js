@@ -60,13 +60,13 @@ class LocationPanel extends Component {
 
 			<div className='locations-panel'>
 
-				<div className="search-locations">
+				<div className="search-locations" id='location'>
 				    <div className="search-locations-bar">
-				        <div className="search-locations-input-wrapper">
-				            <input 
+				        <div className="search-locations-input-wrapper" id='input'>
+				            <input
 				                role={"search"}
 				                tabIndex={0}
-				                aria-labelledby={"text filter"}
+				                aria-labelledby={"location input"}
 				                type="text" 
 				                placeholder="Search Coffee Shop"
 				                value={this.state.query}
@@ -97,12 +97,14 @@ class LocationPanel extends Component {
 						        		{l.name}
 							        	
 							        		<div>
-							        			<div className='loc-info'>
+							        			<div className='loc-info' tabIndex={0}>
 							        				Address: {l.address}
+							        				
 							        			</div>
 							        			
-							        			<div className='loc-info'>
+							        			<div className='loc-info' tabIndex={0}>
 							        				FourSquare Rating: { l.rating}
+							        				
 							        			</div>
 							        		</div>
 						        		</div>
